@@ -30,7 +30,7 @@ The script requires Python 3.8+ and the `aiohttp` library. On Debian/Ubuntu syst
 ```bash
 sudo apt update
 sudo apt install python3-aiohttp
-
+```
 ## ⏱ Automation (Cron Job)
 To keep your library in sync automatically, set up a Cron job. The example below runs the sync every 6 hours and logs the output for troubleshooting.
 Open your crontab: crontab -e
@@ -38,7 +38,7 @@ Add the following line (adjust paths for your setup):
 ```bash
 # Runs every 6 hours at the start of the hour
 0 */6 * * * /usr/bin/python3 /home/user/scripts/immich_sync.py >> /home/user/scripts/immich_sync_cron.log 2>&1
-
+```
 ## 🧠 How it Works
 1. Health Check: Ensures the Immich server is reachable before touching the filesystem.
 2. Parallel Fetch: Gathers all album and asset data simultaneously using asyncio.
