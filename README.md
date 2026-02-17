@@ -49,5 +49,5 @@ Add the following line (adjust paths for your setup):
 0 */6 * * * /usr/bin/python3 /home/user/scripts/immich_sync.py >> /home/user/scripts/immich_sync_cron.log 2>&1
 ```
 ## Other Notes
--This has not been tested with an External Library as I do not have one to test it on. It may work, use at your own risk
--This code was generated with AI assistance
+- This has not been tested with an External Library as I do not have one to test it on. It may work, use at your own risk
+- This code was generated with AI assistance
