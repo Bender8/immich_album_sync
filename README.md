@@ -1,15 +1,24 @@
 # Immich Album Symlink Sync
 
-A high-performance Python script to create a 1-to-1 local filesystem representation of your Immich albums using symbolic links. 
+Python script to create a 1-to-1 local filesystem representation of your Immich albums using symbolic links. 
 
-This tool is perfect for users who want to expose their Immich albums to other services (like Plex, Jellyfin, or basic file browsers) without duplicating large media files.
+This tool is perfect for users who want to expose their Immich albums to other services (like Jellyfin, Screensavers, or basic file browsers) without duplicating large media files. Using symlinks it is possible to have any single photo show up in multiple album folders.
 
-## 🚀 Features
+This symlink album method was inspired by gilesknap/gphotos-sync which was a fantastic tool back when google allowed it to work.
+
+## Features
 - **Zero Storage Overhead**: Uses symlinks to point to your existing Immich library.
 - **Self-Healing**: Automatically detects and repairs broken links or renamed albums.
 - **Orphan Cleanup**: Deletes local files and folders that are no longer in your Immich albums.
 - **Performant**: Uses asynchronous API calls and local caching to sync thousands of photos in seconds.
 - **Portable & Docker-Aware**: Automatically translates internal Docker paths to your host filesystem paths.
+
+## 🧠 How it Works
+1. Health Check: Ensures the Immich server is reachable before touching the filesystem.
+2. Parallel Fetch: Gathers all album and asset data simultaneously using asyncio.
+3. Dynamic Mapping: Compares "Immich's" internal paths to your IMMICH_LIBRARY_PATH to translate them for the host system.
+4. Symlink Sync: Creates a Year/Month folder structure and generates symlinks for each asset.
+5. Orphan Cleanup: Scans the target directory and removes any files or empty folders no longer present in Immich.
 
 ## 🖥️ Deployment Note
 For the symbolic links to function correctly, **run this script directly on the host machine** hosting your Immich Docker container. Running it inside a container often prevents the symlinks from resolving to the physical storage paths on the host.
@@ -39,9 +48,6 @@ Add the following line (adjust paths for your setup):
 # Runs every 6 hours at the start of the hour
 0 */6 * * * /usr/bin/python3 /home/user/scripts/immich_sync.py >> /home/user/scripts/immich_sync_cron.log 2>&1
 ```
-## 🧠 How it Works
-1. Health Check: Ensures the Immich server is reachable before touching the filesystem.
-2. Parallel Fetch: Gathers all album and asset data simultaneously using asyncio.
-3. Dynamic Mapping: Compares "Immich's" internal paths to your IMMICH_LIBRARY_PATH to translate them for the host system.
-4. Symlink Sync: Creates a Year/Month folder structure and generates symlinks for each asset.
-5. Orphan Cleanup: Scans the target directory and removes any files or empty folders no longer present in Immich.
+## Other Notes
+-This has not been tested with an External Library as I do not have one to test it on. It may work, use at your own risk
+-This code was generated with AI assistance
