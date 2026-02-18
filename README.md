@@ -50,4 +50,5 @@ Add the following line (adjust paths for your setup):
 ```
 ## Other Notes
 - This has not been tested with an External Library as I do not have one to test it on. It may work, use at your own risk
+- The script is hard coded to create albums with the following folder structure: /Album/YYYY/YYYY-MM/photo.jpg
 - This code was generated with AI assistance
