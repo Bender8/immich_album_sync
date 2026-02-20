@@ -224,6 +224,7 @@ async def sync_immich_albums():
         json.dump({"assets": new_asset_cache, "album_map": new_album_map}, f)
     logger.info("--- Sync Complete ---")
 
+
 if __name__ == "__main__":
     try:
         asyncio.run(sync_immich_albums())
