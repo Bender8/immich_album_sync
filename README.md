@@ -21,7 +21,7 @@ This symlink album method was inspired by gilesknap/gphotos-sync which was a fan
 5. Orphan Cleanup: Scans the target directory and removes any files or empty folders no longer present in Immich.
 
 ## 🖥️ Deployment Note
-For the symbolic links to function correctly, **run this script directly on the host machine** hosting your Immich Docker container. Running it inside a container often prevents the symlinks from resolving to the physical storage paths on the host.
+For the symbolic links to function correctly, **run this script directly on the machine** hosting your Immich Docker container. Running it inside a container often prevents the symlinks from resolving to the physical storage paths on the host.
 
 ## 🛠 Configuration
 Open the script and edit the **CONFIGURATION** section at the top:
