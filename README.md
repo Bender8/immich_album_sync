@@ -2,9 +2,9 @@
 
 Python script to create a 1-to-1 local filesystem representation of your Immich albums using symbolic links. 
 
-Pairs great with Bender8/immich_auto_album to create automatic albums based on metadata.
-
 This tool is perfect for users who want to expose their Immich albums to other services (like Jellyfin, Screensavers, or basic file browsers) without duplicating large media files. Using symlinks it is possible to have any single photo show up in multiple album folders.
+
+Pairs great with Bender8/immich_auto_album to create automatic albums based on metadata.
 
 This symlink album method was inspired by gilesknap/gphotos-sync which was a fantastic tool back when google allowed it to work.
 
