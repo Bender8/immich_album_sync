@@ -78,12 +78,42 @@ async def check_immich_health(session):
 
 
 async def fetch_album_assets(session, album, semaphore):
-    """Fetches assets for an album, respecting the concurrency limit."""
-    async with semaphore:
-        url = f"{IMMICH_URL}/api/albums/{album['id']}"
-        async with session.get(url, headers=headers) as resp:
-            data = await resp.json()
-            return album, data.get('assets', [])
+    """
+    Fetches assets for an album from Immich v3 by utilizing the modern,
+    paginated /api/search/metadata endpoint filtered by albumIds.
+    """
+    album_id = album['id']
+    all_assets = []
+    page = 1
+    url = f"{IMMICH_URL}/api/search/metadata"
+
+    while True:
+        # Wrap the album id inside an array as required by Immich v3
+        payload = {"albumIds": [album_id], "size": 1000, "page": page}
+
+        async with semaphore:
+            try:
+                async with session.post(url, json=payload, headers=headers, timeout=30) as resp:
+                    if resp.status != 200:
+                        logger.error(f"Failed fetching assets for album {album['albumName']} on page {page}: {resp.status}")
+                        raise RuntimeError(f"API Error fetching remote album assets: {resp.status}")
+
+                    data = await resp.json()
+                    items = data.get("assets", {}).get("items", [])
+
+                    # If we receive an empty list, we've reached the end of the album's assets
+                    if not items:
+                        break
+
+                    all_assets.extend(items)
+                    page += 1
+
+            except Exception as e:
+                logger.error(f"Exception while loading assets for album {album['albumName']} on page {page}: {e}")
+                # Pass back whatever we managed to grab up to this point or raise an error to protect from accidental deletion
+                raise
+
+    return album, all_assets
 
 
 # --- FILE SYSTEM FUNCTIONS ---
